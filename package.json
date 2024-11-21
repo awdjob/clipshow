@@ -1,0 +1,11 @@
+{
+  "name": "clipshow",
+  "version": "1.0.0",
+  "description": "Show clips and sound alerts on twitch via PWA Controls",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Johnny C",
+  "license": "ISC"
+}
