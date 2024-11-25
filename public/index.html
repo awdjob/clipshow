@@ -1,0 +1,49 @@
+<html>
+
+<head>
+    <style>
+        .hidden { display: none }
+    </style>
+</head>
+
+<body>
+    <div style="height: 100%; display: flex;">
+        <video autoplay="autoplay" class="hidden">
+        </video>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const eventSource = new EventSource('/events');
+            const video = document.querySelector("video")
+
+            video.onended = (event) => {
+                console.log("ENDED")
+                video.classList.add("hidden")
+            }
+
+            eventSource.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                console.log('Data received:', data);
+
+                video.classList.remove("hidden")
+                video.src = data.clipSrc
+                video.play();
+            };
+
+            eventSource.addEventListener('ping', (event) => {
+                console.log('Ping received');
+            });
+
+            eventSource.onerror = (error) => {
+                console.log('Connection error, will retry automatically');
+            };
+
+            eventSource.onopen = (event) => {
+                console.log("CONNECTED")
+            }
+        })
+    </script>
+</body>
+
+</html>
